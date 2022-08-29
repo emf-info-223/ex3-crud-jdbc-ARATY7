@@ -11,8 +11,6 @@ import java.util.Properties;
 public class DbWorker implements DbWorkerItf {
 
     private Connection dbConnexion;
-    private List<Personne> listePersonnes;
-    private int index = 0;
 
     /**
      * Constructeur du worker
@@ -23,8 +21,8 @@ public class DbWorker implements DbWorkerItf {
     @Override
     public void connecterBdMySQL(String nomDB) throws MyDBException {
         final String url_local = "jdbc:mysql://localhost:3306/" + nomDB;
-        final String url_remote = "jdbc:mysql://LAPEMFB37-21.edu.net.fr.ch:3306/" + nomDB;
-        final String user = "root";
+        final String url_remote = "jdbc:mysql://172.23.85.187:3306/" + nomDB;
+        final String user = "223";
         final String password = "emf123";
 
         System.out.println("url:" + url_remote);
@@ -70,23 +68,30 @@ public class DbWorker implements DbWorkerItf {
         }
     }
 
+    @Override
     public List<Personne> lirePersonnes() throws MyDBException {
-        listePersonnes = new ArrayList<>();
-        
-        return listePersonnes;
-    }
-
-    @Override
-    public Personne precedentPersonne() throws MyDBException {
 
         return null;
 
     }
 
     @Override
-    public Personne suivantPersonne() throws MyDBException {
+    public void creer(Personne personne) {
 
+    }
+
+    @Override
+    public void effacer(Personne personne) {
+
+    }
+
+    @Override
+    public Personne lire(int nb) {
         return null;
+    }
+
+    @Override
+    public void modifier(Personne personne) {
 
     }
 
