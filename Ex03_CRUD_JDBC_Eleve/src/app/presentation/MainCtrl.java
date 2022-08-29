@@ -14,9 +14,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import java.io.File;
-import app.workers.DbWorkerItf;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import app.workers.*;
 import javafx.application.Platform;
 
 /**
@@ -33,6 +31,7 @@ public class MainCtrl implements Initializable {
   // DB par défaut
   final static private TypesDB DB_TYPE = TypesDB.MYSQL;
 
+  private PersonneManager manPers;
   private DbWorkerItf dbWrk;
   private boolean modeAjout;
 
@@ -75,6 +74,7 @@ public class MainCtrl implements Initializable {
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     dbWrk = new DbWorker();
+    manPers = new PersonneManager();
     ouvrirDB();
   }
 
