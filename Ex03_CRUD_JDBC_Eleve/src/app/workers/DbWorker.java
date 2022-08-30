@@ -70,28 +70,49 @@ public class DbWorker implements DbWorkerItf {
 
     @Override
     public List<Personne> lirePersonnes() throws MyDBException {
+        ArrayList<Personne> listePersonnes = new ArrayList<>();
+        try {
+            Statement st = dbConnexion.createStatement();
+            ResultSet rs = st.executeQuery("SELECT PK_PERS, Prenom, Nom, Date_naissance, No_rue, Rue, NPA, Ville, Actif, Salaire, date_modif, no_modif from t_personne");
+            
+            while (rs.next()) {
+                int pk = rs.getInt("PK_PERS");
+                String prenom = rs.getString("Prenom");
+                String nom = rs.getString("Nom");
+                java.util.Date dateNaissance = rs.getDate("Date_naissance");
+                int noRue = rs.getInt("No_rue");
+                String rue = rs.getString("Rue");
+                int NPA = rs.getInt("NPA");
+                String ville = rs.getString("Ville");
+                boolean actif = rs.getByte("Actif") == 1;
+                Double salaire = rs.getDouble("Salaire");
+                java.util.Date dateModif = new java.util.Date(rs.getDate("date_modif").getTime());
 
+                listePersonnes.add(new Personne(pk, nom, prenom, dateNaissance, noRue, rue, NPA, ville, actif, salaire, dateModif));
+            }
+        } catch (SQLException ex) {
+            
+        }       
+        return listePersonnes;
+    }
+
+    @Override
+    public void creer(Personne p) throws MyDBException {
+        
+    }
+
+    @Override
+    public Personne lire(int PK) throws MyDBException {
         return null;
+    }
+
+    @Override
+    public void modifier(Personne p) throws MyDBException {
 
     }
 
     @Override
-    public void creer(Personne personne) {
-
-    }
-
-    @Override
-    public void effacer(Personne personne) {
-
-    }
-
-    @Override
-    public Personne lire(int nb) {
-        return null;
-    }
-
-    @Override
-    public void modifier(Personne personne) {
+    public void effacer(Personne p) throws MyDBException {
 
     }
 
