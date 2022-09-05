@@ -119,16 +119,32 @@ public class MainCtrl implements Initializable {
     @FXML
     private void menuAjouter(ActionEvent event) {
         effacerContenuChamps();
+        rendreVisibleBoutonsDepl(false);
+        modeAjout = true;
+
     }
 
     @FXML
     private void menuModifier(ActionEvent event) {
-        
+        rendreVisibleBoutonsDepl(false);
+        modeAjout = false;
     }
 
     @FXML
     private void menuEffacer(ActionEvent event) {
-       
+        try {
+            dbWrk.effacer(manPers.courantPersonne());
+            manPers.setPersonnes(dbWrk.lirePersonnes());
+            afficherPersonne(manPers.debutPersonne());
+
+            rendreVisibleBoutonsDepl(true);
+            btnAnnuler.setVisible(true);
+            btnSauver.setVisible(true);
+
+        } catch (MyDBException ex) {
+            JfxPopup.displayError("ERREUR", "Une erreur s'est produite", ex.getMessage());
+        }
+
     }
 
     @FXML
@@ -143,12 +159,55 @@ public class MainCtrl implements Initializable {
 
     @FXML
     private void annulerPersonne(ActionEvent event) {
-        
+        rendreVisibleBoutonsDepl(true);
+        btnSauver.setVisible(true);
+        btnAnnuler.setVisible(true);
     }
 
     @FXML
     private void sauverPersonne(ActionEvent event) {
 
+        int pk = Integer.valueOf(txtPK.getText());
+        String nom = txtNom.getText();
+        String prenom = txtPrenom.getText();
+        Date dateNai = java.sql.Date.valueOf(dateNaissance.getValue());
+        int num = Integer.valueOf(txtNo.getText());
+        String rue = txtRue.getText();
+        int npa = Integer.valueOf(txtNPA.getText());
+        String localite = txtLocalite.getText();
+        boolean actif = ckbActif.isSelected();
+        double salaire = Double.valueOf(txtSalaire.getText());
+        Date date = new Date();
+
+        if (modeAjout) {
+
+            try {
+                dbWrk.creer(new Personne(nom, prenom, dateNai, num, rue, npa, localite, actif, salaire, date));
+            } catch (MyDBException ex) {
+                JfxPopup.displayError("ERREUR", "Une erreur s'est produite", ex.getMessage());
+            }
+
+        } else {
+
+            try {
+                dbWrk.modifier(new Personne(pk, nom, prenom, dateNai, num, rue, npa, localite, actif, salaire, date));
+            } catch (MyDBException ex) {
+                JfxPopup.displayError("ERREUR", "Une erreur s'est produite", ex.getMessage());
+            }
+
+        }
+
+        try {
+            manPers.setPersonnes(dbWrk.lirePersonnes());
+        } catch (MyDBException ex) {
+            JfxPopup.displayError("ERREUR", "Une erreur s'est produite", ex.getMessage());
+        }
+
+        afficherPersonne(manPers.debutPersonne());
+
+        rendreVisibleBoutonsDepl(true);
+        btnAnnuler.setVisible(true);
+        btnSauver.setVisible(true);
     }
 
     public void quitter() {

@@ -22,6 +22,12 @@ public class PersonneManager {
     }
 
     public Personne courantPersonne() {
+        if (listePersonnes == null || listePersonnes.isEmpty()) {
+            return null;
+        }
+        if (index >= listePersonnes.size()) {
+            index = listePersonnes.size() - 1;
+        }
         return listePersonnes.get(index);
     }
 
