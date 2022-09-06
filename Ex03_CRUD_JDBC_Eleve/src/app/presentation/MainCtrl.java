@@ -203,7 +203,7 @@ public class MainCtrl implements Initializable {
             JfxPopup.displayError("ERREUR", "Une erreur s'est produite", ex.getMessage());
         }
 
-        afficherPersonne(manPers.debutPersonne());
+        afficherPersonne(manPers.courantPersonne());
 
         rendreVisibleBoutonsDepl(true);
         btnAnnuler.setVisible(true);
