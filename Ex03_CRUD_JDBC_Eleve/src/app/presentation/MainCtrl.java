@@ -167,7 +167,7 @@ public class MainCtrl implements Initializable {
     @FXML
     private void sauverPersonne(ActionEvent event) {
 
-        int pk = Integer.valueOf(txtPK.getText());
+        
         String nom = txtNom.getText();
         String prenom = txtPrenom.getText();
         Date dateNai = java.sql.Date.valueOf(dateNaissance.getValue());
@@ -190,6 +190,7 @@ public class MainCtrl implements Initializable {
         } else {
 
             try {
+                int pk = Integer.valueOf(txtPK.getText());
                 dbWrk.modifier(new Personne(pk, nom, prenom, dateNai, num, rue, npa, localite, actif, salaire, date));
             } catch (MyDBException ex) {
                 JfxPopup.displayError("ERREUR", "Une erreur s'est produite", ex.getMessage());

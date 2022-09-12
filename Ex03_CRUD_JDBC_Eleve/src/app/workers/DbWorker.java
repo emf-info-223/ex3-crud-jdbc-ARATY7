@@ -93,7 +93,7 @@ public class DbWorker implements DbWorkerItf {
                 }
             }
         } catch (SQLException ex) {
-            throw new MyDBException(SystemLib.getFullMethodName(), ex.getMessage());
+             throw new MyDBException(SystemLib.getFullMethodName(), ex.getMessage());
         }
         return listePersonnes;
     }
@@ -120,7 +120,9 @@ public class DbWorker implements DbWorkerItf {
             int nb = st.executeUpdate();
 
             if (nb != 1) {
-                throw new MyDBException(SystemLib.getFullMethodName(), "Erreur d'insert");
+                 throw new MyDBException(SystemLib.getFullMethodName(), "Erreur d'insert");
+            } else {
+                System.out.println("Personne ajoutée avec succès");
             }
 
         } catch (SQLException | NullPointerException ex) {
